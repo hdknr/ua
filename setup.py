@@ -41,7 +41,7 @@
 NAME = 'ua'
 USER = 'hdknr'
 DESCRIPTION = 'user agent handler'
-PACKAGES = ['ua', 'ua.django', ]
+PACKAGES = ['ua', ]
 LICENSE = 'Simplfied BSD License'
 AUTHOR = 'Hideki Nara of LaFoaglia,Inc.'
 AUTHOR_EMAIL = 'gmail [at] hdknr.com'
