@@ -65,8 +65,9 @@ class UrlBasedSessionMiddleware(SessionMiddleware):
         AuthenticationMiddleware().process_request(request)
 
     def process_response(self, request, response):
-        request.session['last_csrf_cookie'] = \
-            request.META.get("CSRF_COOKIE", '')
+        if hasattr(request, "session"):
+            request.session['last_csrf_cookie'] = \
+                request.META.get("CSRF_COOKIE", '')
 
         return super(UrlBasedSessionMiddleware,
                      self).process_response(request, response)
