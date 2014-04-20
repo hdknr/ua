@@ -19,14 +19,21 @@ def from_url(path_info, path=None):
 
 
 def to_url(url, session_key):
-    u = urlparse(url)
+    if isinstance(url, basestring):
+        url = urlparse(url)
+
     val = dict(
-        path=u.path,
-        query='?' + u.query if u.query else '',
-        fragment='#' + u.fragment if u.fragment else '',
+        scheme=url.scheme + ":" if url.scheme else '',
+        netloc="//" + url.netloc if url.netloc else '',
+        path=url.path,
+        query='?' + url.query if url.query else '',
+        fragment='#' + url.fragment if url.fragment else '',
         session_key=session_key
     )
-    return "{path};({session_key}){query}{fragment}".format(**val)
+    return ";".join([
+        "{scheme}{netloc}{path}",
+        "({session_key}){query}{fragment}",
+    ]).format(**val)
 
 
 def is_valid_session(request):

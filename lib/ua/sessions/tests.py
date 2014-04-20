@@ -58,15 +58,15 @@ def home(request):
 
 
 def agent(request):
-    from utils import session_embedded_url
+#    from utils import session_embedded_url
+    print request.get_host()     # dir(request)
     return HttpResponseRedirect(
-        session_embedded_url(request,
-                             '/redir?agent=' + request.agent.CLASS.value)
-    )
+        '/redir?agent=' + request.agent.CLASS.value)
+#        session_embedded_url(request,
+#    )
 
 
 def redir(request):
-    print "redire....."
     session_key = request.session and request.session.session_key
     return HttpResponse(
         session_key + ":" +

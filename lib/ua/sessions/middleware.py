@@ -6,6 +6,9 @@ from django.utils.importlib import import_module
 from django.conf import settings, global_settings
 from django.contrib.auth.middleware import AuthenticationMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
+from django.http.response import HttpResponseRedirect
+
+from urlparse import urlparse
 
 
 import logging
@@ -65,9 +68,20 @@ class UrlBasedSessionMiddleware(SessionMiddleware):
         AuthenticationMiddleware().process_request(request)
 
     def process_response(self, request, response):
+
         if hasattr(request, "session"):
             request.session['last_csrf_cookie'] = \
                 request.META.get("CSRF_COOKIE", '')
 
+            if isinstance(
+                response, HttpResponseRedirect
+            ) and request.agent.COOKIELESS:
+                purl = urlparse(response.url)
+                if not purl.netloc or purl.netloc == request.get_host():
+                    response = HttpResponseRedirect(
+                        utils.to_url(purl,
+                                     request.session.session_key))
+
         return super(UrlBasedSessionMiddleware,
                      self).process_response(request, response)
+

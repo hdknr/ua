@@ -14,7 +14,7 @@ class TestAgent(unittest.TestCase):
         from ua.agents import agent
         for a in FP:
             ag = agent(a)
-            print ag.__class__,
+            print ag.__class__, ag.name,
             self.assertTrue(ag.COOKIELESS)
 
         print
@@ -28,7 +28,7 @@ class TestAgent(unittest.TestCase):
         ]
         for a in SP:
             ag = agent(a)
-            print ag.__class__,
+            print ag.__class__, ag.name,
             self.assertFalse(ag.COOKIELESS)
         print
 
@@ -43,7 +43,7 @@ class TestAgent(unittest.TestCase):
         ]
         for a in PC:
             ag = agent(a)
-            print ag.__class__,
+            print ag.__class__, ag.name,
             self.assertFalse(ag.COOKIELESS)
         print
 
@@ -53,7 +53,7 @@ class TestAgent(unittest.TestCase):
         ]
         for a in OT:
             ag = agent(a)
-            print ag.__class__,
+            print ag.__class__, ag.name,
             self.assertFalse(ag.COOKIELESS)
         print
 
