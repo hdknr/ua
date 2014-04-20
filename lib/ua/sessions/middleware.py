@@ -7,6 +7,7 @@ from django.conf import settings, global_settings
 from django.contrib.auth.middleware import AuthenticationMiddleware
 from django.contrib.sessions.middleware import SessionMiddleware
 from django.http.response import HttpResponseRedirect
+from django.template import Template
 
 from urlparse import urlparse
 
@@ -85,3 +86,15 @@ class UrlBasedSessionMiddleware(SessionMiddleware):
         return super(UrlBasedSessionMiddleware,
                      self).process_response(request, response)
 
+
+class TemplateResolve(object):
+    def process_template_response(self, request, response):
+        '''  called by views with django.template.response.TemplateResponse
+        '''
+
+        if hasattr(response, "template_name"):
+            if not isinstance(response.template_name, Template):
+                templates = utils.get_templates(request, response)
+                response.template_name = templates
+
+        return response

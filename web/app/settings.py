@@ -83,8 +83,10 @@ STATIC_URL = '/static/'
 ############################################################
 
 INSTALLED_APPS += (
-    'todo',
+    'todo',             # todo application
+    'htmls',            # HTML statc and templates holder
 )
 MIDDLEWARE_CLASSES += (
+    'ua.sessions.middleware.TemplateResolve',
     'ua.sessions.middleware.UrlBasedSessionMiddleware',
 )

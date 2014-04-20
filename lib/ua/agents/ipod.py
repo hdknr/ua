@@ -1,5 +1,6 @@
 from .iphone import Agent as BaseAgent
+from ua.agents import DeviceClass
 
 
 class Agent(BaseAgent):
-    pass
+    CLASS = DeviceClass.SMART

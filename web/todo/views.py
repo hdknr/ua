@@ -1,14 +1,14 @@
 # -*- coding: utf-8 -*-
-from django import template
 from django.core.urlresolvers import reverse
-from django.shortcuts import render_to_response
 from django.http.response import HttpResponseRedirect
+from django.template.response import TemplateResponse
 
 
 def default(request):
-    return render_to_response(
+    return TemplateResponse(
+        request,
         'todo/default.html',
-        {}, context_instance=template.RequestContext(request),)
+        {'request': request, })
 
 
 def hello(request):

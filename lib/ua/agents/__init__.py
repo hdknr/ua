@@ -16,10 +16,10 @@ class BaseEnum(Enum):
             raise e
 
 DeviceClassDict = dict(
-    FULL='pc',
-    SMART='sp',
-    FEATURED='fp',
-    OTHER='ot'
+    FULL='full',
+    SMART='smart',
+    PHONE='phone',  # featured phone
+    OTHER='other'
 )
 
 DeviceClass = type('DeviceClass', (BaseEnum, ), DeviceClassDict)

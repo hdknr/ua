@@ -68,6 +68,7 @@ def agent(request):
 
 def redir(request):
     session_key = request.session and request.session.session_key
+    print settings.TEMPLATE_LOADERS
     return HttpResponse(
         session_key + ":" +
         request.META.get('HTTP_USER_AGENT', 'N/A'))

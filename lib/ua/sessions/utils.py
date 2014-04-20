@@ -36,6 +36,26 @@ def to_url(url, session_key):
     ]).format(**val)
 
 
+def get_templates(request, response):
+    '''  for template loaders to  find the file in this order:
+        1.  agent_docomo/specified/by/view/file.html
+        2.  device_phone/specified/by/view/file.html
+        3.  specified/by/view/file.html
+    '''
+    templates = response.template_name
+    if not isinstance(templates, (list, tuple)):
+        templates = [templates]
+    device = request.agent.CLASS.value
+
+    device_templates = []
+    for template in templates:
+        device_templates.append("agent_%s/%s" % (request.agent.name, template))
+        device_templates.append("device_%s/%s" % (device, template))
+        device_templates.append(template)
+
+    return device_templates
+
+
 def is_valid_session(request):
     ''' check validity
     '''
