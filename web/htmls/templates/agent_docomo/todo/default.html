@@ -1,3 +1,8 @@
-<h1>todo</h1>
+{% extends "agent_docomo/base.html" %}
+{% load i18n %}
+
+{% block page_content %}
+<h1>{% trans "To Do" %}</h1>
 <p> for docomo featured phones </p>
 {{ request.agent }}
+{% endblock %}

@@ -26,7 +26,6 @@ TEMPLATE_DEBUG = True
 
 ALLOWED_HOSTS = []
 
-
 # Application definition
 
 INSTALLED_APPS = (
@@ -65,9 +64,9 @@ DATABASES = {
 # Internationalization
 # https://docs.djangoproject.com/en/1.6/topics/i18n/
 
-LANGUAGE_CODE = 'en-us'
+LANGUAGE_CODE = 'ja'
 
-TIME_ZONE = 'UTC'
+TIME_ZONE = 'Asia/Tokyo'
 
 USE_I18N = True
 
@@ -82,6 +81,10 @@ USE_TZ = True
 STATIC_URL = '/static/'
 ############################################################
 
+TEMPLATE_DIRS = (
+    os.path.join(BASE_DIR, 'templates'),
+)
+
 INSTALLED_APPS += (
     'todo',             # todo application
     'htmls',            # HTML statc and templates holder
@@ -89,4 +92,5 @@ INSTALLED_APPS += (
 MIDDLEWARE_CLASSES += (
     'ua.sessions.middleware.TemplateResolve',
     'ua.sessions.middleware.UrlBasedSessionMiddleware',
+    'ua.agents.middleware.ResponseEncodingMiddleware',
 )

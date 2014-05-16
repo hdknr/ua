@@ -1,2 +1,7 @@
-<h1>todo</h1>
+{% extends "base.html" %}
+{% load i18n %}
+
+{% block page_content %}
+<h1>{% trans "To Do" %}</h1>
 {{ request.agent }}
+{% endblock %}

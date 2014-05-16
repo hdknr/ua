@@ -97,3 +97,14 @@ class BaseAgent(object):
     @property
     def name(self):
         return self.__class__.__module__.split('.')[-1]
+
+    def encode_response(self, request, response):
+        return response
+
+    def encode_response_shift_jis(self, request, response):
+        if not response['content-type'].startswith('text/'):
+            return response
+        response.content = unicode(
+            response.content, 'utf8').encode('cp932', 'replace')
+        response['content-type'] = 'application/xhtml+xml; charset=Shift_JIS'
+        return response
