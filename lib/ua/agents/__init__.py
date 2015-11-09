@@ -39,7 +39,7 @@ DETECTOR = [
     r'(?P<agent>Symbian)',
     # Smart Device
     r'\((?P<agent>iPhone);',
-    r'\((?P<agent>iPod);',
+    r'\((?P<agent>iPod)[^;]*;',     # iPod, iPod touch...
     r'\((?P<agent>iPad);',
     r'(?P<agent>Android)',
     r'(?P<agent>Windows\sPhone)',
