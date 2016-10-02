@@ -1,6 +1,9 @@
 import re
 from enum import Enum
 from importlib import import_module
+import traceback
+from logging import getLogger
+logger = getLogger()
 
 
 class BaseEnum(Enum):
@@ -78,14 +81,6 @@ def agent_mod(agent_string):
     return import_module(mod_name)
 
 
-def agent(agent_string=None, request=None):
-    if not agent_string and request:
-        env = getattr(request, 'META', {})
-        agent_string = env.get('HTTP_USER_AGENT', '')
-    mod = agent_mod(agent_string)
-    return getattr(mod, 'Agent')(agent_string, request)
-
-
 class BaseAgent(object):
     CLASS = DeviceClass.FULL
     COOKIELESS = False
@@ -108,3 +103,15 @@ class BaseAgent(object):
             response.content, 'utf8').encode('cp932', 'replace')
         response['content-type'] = 'application/xhtml+xml; charset=Shift_JIS'
         return response
+
+
+def agent(agent_string=None, request=None):
+    try:
+        if not agent_string and request:
+            env = getattr(request, 'META', {})
+            agent_string = env.get('HTTP_USER_AGENT', '')
+        mod = agent_mod(agent_string)
+        return getattr(mod, 'Agent')(agent_string, request)
+    except:
+        logger.error(traceback.format_exc())
+        return BaseAgent(agent_string, request)
